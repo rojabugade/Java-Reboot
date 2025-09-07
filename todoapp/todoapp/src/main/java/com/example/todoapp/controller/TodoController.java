@@ -25,7 +25,7 @@ public class TodoController {
 	public List<Todo> getTodos() {
 		return service.getAll();
 	}
-
+	
 	@PostMapping
 	public Todo addTodo(@RequestBody Todo todo) {
 		return service.save(todo);
