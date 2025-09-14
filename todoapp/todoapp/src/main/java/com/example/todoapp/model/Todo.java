@@ -3,6 +3,7 @@ package com.example.todoapp.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Todo {
@@ -39,4 +40,7 @@ public class Todo {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
+    @ManyToOne
+    private User user;
 }

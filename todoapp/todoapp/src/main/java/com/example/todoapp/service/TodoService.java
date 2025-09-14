@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.example.todoapp.controller.TodoNotFoundException;
 import com.example.todoapp.model.Todo;
+import com.example.todoapp.model.TodoDTO;
 import com.example.todoapp.repository.TodoRepository;
 
 @Service
@@ -39,5 +41,24 @@ public class TodoService {
 
     public List<Todo> searchTodos(String keyword) {
         return repo.findByTitleContainingIgnoreCase(keyword);
+    }
+
+    public TodoDTO toDto(Todo todo) {
+        TodoDTO dto = new TodoDTO();
+        dto.setId(todo.getId());
+        dto.setTitle(todo.getTitle());
+        dto.setCompleted(todo.isCompleted());
+        return dto;
+    }
+
+    public Todo getTodoById(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTodoById'");
+    }
+
+    public Todo getById(Long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new TodoNotFoundException("Todo not found with ID " +
+                        id));
     }
 }
