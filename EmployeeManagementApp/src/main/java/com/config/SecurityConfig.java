@@ -18,9 +18,8 @@ public class SecurityConfig {
 			.csrf(AbstractHttpConfigurer::disable)
 			.headers(headers -> headers.frameOptions(frame -> frame.disable())) // for H2 console
 			.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/api/health", "/h2-console/**").permitAll()
-				.requestMatchers("/api/employees/**").authenticated()
-				.anyRequest().permitAll())
+				   .requestMatchers("/api/health", "/h2-console/**", "/api/employees/**").permitAll()
+				   .anyRequest().permitAll())
 			.httpBasic(Customizer.withDefaults());
 
 		return http.build();

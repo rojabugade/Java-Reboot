@@ -22,7 +22,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService service;
 
-	@PostMapping("/api/employees/post")
+	@PostMapping
 	public ResponseEntity<EmployeeDTO> create(@Valid @RequestBody EmployeeDTO dto) {
 		return ResponseEntity.ok(service.createDto(dto));
 	}
