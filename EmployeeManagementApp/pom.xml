@@ -9,6 +9,7 @@
 		<version>3.5.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.employeeManagementApp</groupId>
 	<artifactId>EmployeeManagementApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -35,10 +36,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- Swagger/OpenAPI UI -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.5.0</version>
 		</dependency>
 
 		<!-- Spring Boot Starter Data JPA -->
