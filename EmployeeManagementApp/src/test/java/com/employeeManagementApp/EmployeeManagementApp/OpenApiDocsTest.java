@@ -21,4 +21,8 @@ class OpenApiDocsTest {
         mockMvc.perform(get("/v3/api-docs"))
                 .andExpect(status().isOk());
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6bdd53f4928866d5b0fec88555df1030e1449f4e
