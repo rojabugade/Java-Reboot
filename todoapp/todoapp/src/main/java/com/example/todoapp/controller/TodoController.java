@@ -22,56 +22,89 @@ import com.example.todoapp.model.Todo;
 import com.example.todoapp.model.TodoDTO;
 import com.example.todoapp.service.TodoService;
 
-import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/todos")
+@Tag(name = "Todo Management", description = "APIs for managing todo items")
 public class TodoController {
 	@Autowired
 	private TodoService service;
 
 	@GetMapping
+	@Operation(summary = "Get all todos", description = "Retrieve a list of all todo items")
+	@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved todos")
 	public List<Todo> getTodos() {
 		return service.getAll();
 	}
 
 	@PostMapping
-	public Todo addTodo(@RequestBody Todo todo) {
+	@Operation(summary = "Create a new todo", description = "Add a new todo item to the list")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Todo created successfully"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input")
+	})
+	public Todo addTodo(@RequestBody @Parameter(description = "Todo item to be created") Todo todo) {
 		return service.save(todo);
 	}
 
 	@PutMapping("/{id}")
-	public Todo updateTodo(@PathVariable Long id, @RequestBody Todo todo) {
+	@Operation(summary = "Update a todo", description = "Update an existing todo item by ID")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Todo updated successfully"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Todo not found")
+	})
+	public Todo updateTodo(
+			@PathVariable @Parameter(description = "ID of the todo to update") Long id, 
+			@RequestBody @Parameter(description = "Updated todo data") Todo todo) {
 		todo.setId(id);
 		return service.save(todo);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteTodo(@PathVariable Long id) {
+	@Operation(summary = "Delete a todo", description = "Remove a todo item by ID")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Todo deleted successfully"),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Todo not found")
+	})
+	public void deleteTodo(@PathVariable @Parameter(description = "ID of the todo to delete") Long id) {
 		service.delete(id);
 	}
 
 	@GetMapping("/page")
+	@Operation(summary = "Get todos with pagination", description = "Retrieve todos with pagination support")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved paginated todos")
+	})
 	public Page<Todo> getTodosWithPagination(
-			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "5") int size) {
+			@RequestParam(defaultValue = "0") @Parameter(description = "Page number (0-indexed)") int page,
+			@RequestParam(defaultValue = "5") @Parameter(description = "Number of items per page") int size) {
 		Pageable pageable = PageRequest.of(page, size);
 		return service.getTodosPaginated(pageable);
 	}
 
 	@GetMapping("/search")
-	public List<Todo> searchTodos(@RequestParam String keyword) {
+	@Operation(summary = "Search todos", description = "Search for todos by keyword")
+	@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully retrieved search results")
+	public List<Todo> searchTodos(
+			@RequestParam @Parameter(description = "Keyword to search for in todo titles") String keyword) {
 		return service.searchTodos(keyword);
 	}
 
-	@PostMapping
-	public ResponseEntity<Todo> createTodo(@Valid @RequestBody Todo todo) {
-		Todo saved = service.save(todo);
-		return ResponseEntity.ok(saved);
-	}
-
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<TodoDTO>> getTodo(@PathVariable Long id) {
+	@Operation(summary = "Get todo by ID", description = "Retrieve a specific todo item by its ID")
+	@ApiResponses(value = {
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Todo found successfully", 
+			content = @Content(schema = @Schema(implementation = com.example.todoapp.model.ApiResponse.class))),
+		@io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Todo not found")
+	})
+	public ResponseEntity<ApiResponse<TodoDTO>> getTodo(
+			@PathVariable @Parameter(description = "ID of the todo to retrieve") Long id) {
 		Todo todo = service.getTodoById(id);
 		TodoDTO dto = service.toDto(todo);
 
