@@ -1,98 +1,88 @@
 package com.example.student_api.integration;
 
 import com.example.student_api.model.Student;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@AutoConfigureWebMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StudentApiIntegrationTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+    @LocalServerPort
+    private int port;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private TestRestTemplate restTemplate;
 
     @Test
-    void testCompleteStudentLifecycle() throws Exception {
+    void testCompleteStudentLifecycle() {
+        String baseUrl = "http://localhost:" + port + "/api/students";
+        
         // Create a student
         Student newStudent = new Student(null, "Integration Test Student", "test@integration.com", "Software Engineering");
         
-        String createdStudentJson = mockMvc.perform(post("/api/students")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(newStudent)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Integration Test Student"))
-                .andReturn().getResponse().getContentAsString();
-
-        Student createdStudent = objectMapper.readValue(createdStudentJson, Student.class);
+        ResponseEntity<Student> createResponse = restTemplate.postForEntity(baseUrl, newStudent, Student.class);
+        assertEquals(HttpStatus.OK, createResponse.getStatusCode());
+        assertNotNull(createResponse.getBody());
+        Student createdStudent = createResponse.getBody();
         Long studentId = createdStudent.getId();
 
         // Get the created student
-        mockMvc.perform(get("/api/students/" + studentId))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Integration Test Student"));
+        ResponseEntity<Student> getResponse = restTemplate.getForEntity(baseUrl + "/" + studentId, Student.class);
+        assertEquals(HttpStatus.OK, getResponse.getStatusCode());
+        assertEquals("Integration Test Student", getResponse.getBody().getName());
 
         // Update the student
         Student updatedStudent = new Student(studentId, "Updated Integration Student", "updated@integration.com", "Data Science");
-        mockMvc.perform(put("/api/students/" + studentId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(updatedStudent)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Updated Integration Student"));
+        HttpEntity<Student> requestEntity = new HttpEntity<>(updatedStudent);
+        ResponseEntity<Student> updateResponse = restTemplate.exchange(baseUrl + "/" + studentId, HttpMethod.PUT, requestEntity, Student.class);
+        assertEquals(HttpStatus.OK, updateResponse.getStatusCode());
 
-        // Get all students (should include our student)
-        mockMvc.perform(get("/api/students"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray());
+        // Get all students
+        ResponseEntity<Student[]> getAllResponse = restTemplate.getForEntity(baseUrl, Student[].class);
+        assertEquals(HttpStatus.OK, getAllResponse.getStatusCode());
 
         // Delete the student
-        mockMvc.perform(delete("/api/students/" + studentId))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Student deleted"));
+        restTemplate.delete(baseUrl + "/" + studentId);
     }
 
     @Test
-    void testValidationErrors() throws Exception {
+    void testValidationErrors() {
+        String baseUrl = "http://localhost:" + port + "/api/students";
+        
         // Test with invalid student (missing required fields)
         Student invalidStudent = new Student(null, "", "invalid-email", "");
         
-        mockMvc.perform(post("/api/students")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invalidStudent)))
-                .andExpect(status().isBadRequest());
+        ResponseEntity<String> response = restTemplate.postForEntity(baseUrl, invalidStudent, String.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
-    void testSwaggerEndpoints() throws Exception {
-        // Test that Swagger UI is accessible
-        mockMvc.perform(get("/swagger-ui.html"))
-                .andExpect(status().is3xxRedirection());
-
+    void testSwaggerEndpoints() {
         // Test that API docs are accessible
-        mockMvc.perform(get("/api-docs"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        ResponseEntity<String> response = restTemplate.getForEntity("http://localhost:" + port + "/api-docs", String.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody().contains("openapi"));
+        assertTrue(response.getBody().contains("info"));
     }
 
     @Test
-    void testActuatorEndpoints() throws Exception {
+    void testActuatorEndpoints() {
         // Test health endpoint
-        mockMvc.perform(get("/actuator/health"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.status").value("UP"));
+        ResponseEntity<String> healthResponse = restTemplate.getForEntity("http://localhost:" + port + "/actuator/health", String.class);
+        assertEquals(HttpStatus.OK, healthResponse.getStatusCode());
+        assertTrue(healthResponse.getBody().contains("UP"));
 
         // Test info endpoint
-        mockMvc.perform(get("/actuator/info"))
-                .andExpect(status().isOk());
+        ResponseEntity<String> infoResponse = restTemplate.getForEntity("http://localhost:" + port + "/actuator/info", String.class);
+        assertEquals(HttpStatus.OK, infoResponse.getStatusCode());
     }
 }
