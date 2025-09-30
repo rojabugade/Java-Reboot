@@ -1,19 +1,19 @@
-# Student Management API 🎓
+# Student Management API 
 
 A modern, production-ready RESTful API for managing student records built with **Spring Boot 3.5.6** and **Java 21 LTS**. This project demonstrates best practices in Java development, including comprehensive testing, containerization, and API documentation.
 
-## ✨ Key Features
+## Key Features
 
-- 🔧 **Full CRUD Operations** - Complete student lifecycle management
-- 📖 **Swagger/OpenAPI 3** - Interactive API documentation
-- ✅ **Input Validation** - Robust validation with custom error handling
-- 🐳 **Docker Support** - Multi-stage builds with security hardening
-- 💓 **Health Checks** - Spring Boot Actuator monitoring
-- ⚡ **Java 21 LTS** - Latest features with ZGC garbage collection
-- 🧪 **Comprehensive Testing** - Unit & Integration tests (100% passing)
-- 🛡️ **Production Ready** - Security, performance, and monitoring built-in
+-  **Full CRUD Operations** - Complete student lifecycle management
+-  **Swagger/OpenAPI 3** - Interactive API documentation
+-  **Input Validation** - Robust validation with custom error handling
+-  **Docker Support** - Multi-stage builds with security hardening
+-  **Health Checks** - Spring Boot Actuator monitoring
+-  **Java 21 LTS** - Latest features with ZGC garbage collection
+-  **Comprehensive Testing** - Unit & Integration tests (100% passing)
+-  **Production Ready** - Security, performance, and monitoring built-in
 
-## 🏗️ Technology Stack
+## Technology Stack
 
 | Component | Technology | Version |
 |-----------|------------|---------|
@@ -25,7 +25,7 @@ A modern, production-ready RESTful API for managing student records built with *
 | **Containerization** | Docker | Latest |
 | **Monitoring** | Spring Boot Actuator | Included |
 
-## 📋 API Endpoints
+## API Endpoints
 
 ### Core Student Operations
 
@@ -62,15 +62,15 @@ A modern, production-ready RESTful API for managing student records built with *
 - **Email**: Required, valid email format
 - **Course**: Required, not blank, 2-100 characters
 
-## � Quick Start Guide
+## Quick Start Guide
 
 ### Prerequisites Checklist
-- ✅ **Java 21 LTS** ([Eclipse Adoptium](https://adoptium.net/) recommended)
-- ✅ **Maven 3.9+** (included via wrapper)
-- ✅ **Git** (for cloning)
-- ✅ **Docker** (optional, for containerization)
+- **Java 21 LTS** ([Eclipse Adoptium](https://adoptium.net/) recommended)
+- **Maven 3.9+** (included via wrapper)
+- **Git** (for cloning)
+- **Docker** (optional, for containerization)
 
-### 🏃‍♂️ Local Development
+### Local Development
 
 #### 1. Clone and Navigate
 ```powershell
@@ -111,12 +111,12 @@ $env:JAVA_HOME="C:\Program Files\Eclipse Adoptium\jdk-21.0.3.9-hotspot"
 ```
 
 #### 5. Verify Installation
-- 🌐 **Application**: http://localhost:8080
-- 📖 **Swagger UI**: http://localhost:8080/swagger-ui.html
-- 📄 **API Docs**: http://localhost:8080/api-docs
-- 💓 **Health Check**: http://localhost:8080/actuator/health
+- **Application**: http://localhost:8080
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **API Docs**: http://localhost:8080/api-docs
+- **Health Check**: http://localhost:8080/actuator/health
 
-### 🐳 Docker Deployment
+### Docker Deployment
 
 #### Option 1: Docker Compose (Recommended)
 ```bash
@@ -149,11 +149,11 @@ docker ps
 docker logs student-api-container
 ```
 
-## 🧪 Testing & Quality Assurance
+## Testing & Quality Assurance
 
 ### Test Suite Overview
 - **Total Tests**: 11 tests across multiple categories
-- **Success Rate**: 100% passing ✅
+- **Success Rate**: 100% passing
 - **Coverage**: Unit tests + Integration tests + Validation tests
 
 ### Running Tests
@@ -180,12 +180,12 @@ $env:JAVA_HOME="C:\Program Files\Eclipse Adoptium\jdk-21.0.3.9-hotspot"
 | `StudentApiApplicationTests` | Smoke | 1 test | Application context loading |
 
 ### Test Scenarios Covered
-- ✅ **CRUD Operations**: Create, Read, Update, Delete students
-- ✅ **Validation Testing**: Invalid input handling
-- ✅ **Error Handling**: Proper HTTP status codes
-- ✅ **Swagger Integration**: API documentation endpoints
-- ✅ **Health Monitoring**: Actuator endpoint verification
-- ✅ **Application Startup**: Context loading verification
+- **CRUD Operations**: Create, Read, Update, Delete students
+- **Validation Testing**: Invalid input handling
+- **Error Handling**: Proper HTTP status codes
+- **Swagger Integration**: API documentation endpoints
+- **Health Monitoring**: Actuator endpoint verification
+- **Application Startup**: Context loading verification
 
 ### Manual API Testing
 
@@ -239,7 +239,7 @@ curl -X POST http://localhost:8080/api/students \
   }'
 ```
 
-## 📚 Documentation
+## Documentation
 
 ### Swagger/OpenAPI
 - **Interactive API Documentation**: http://localhost:8080/swagger-ui.html
@@ -250,9 +250,9 @@ curl -X POST http://localhost:8080/api/students \
 - **Application Info**: http://localhost:8080/actuator/info
 - **Metrics**: http://localhost:8080/actuator/metrics
 
-## 🐳 Docker & Containerization
+## Docker & Containerization
 
-### 🏗️ Multi-Stage Dockerfile Features
+### Multi-Stage Dockerfile Features
 
 ```dockerfile
 # Build Stage (eclipse-temurin:21-jdk-alpine)
@@ -267,13 +267,13 @@ curl -X POST http://localhost:8080/api/students \
 - JVM optimization
 ```
 
-### 🔒 Security Features
+### Security Features
 - **Non-root execution**: Application runs as `appuser` (UID 1001)
 - **Minimal base image**: Alpine Linux for reduced attack surface
 - **Health monitoring**: Built-in health check endpoint
 - **Resource constraints**: Memory limits and JVM optimization
 
-### 🚀 Docker Compose Services
+### Docker Compose Services
 
 ```yaml
 services:
@@ -287,7 +287,7 @@ services:
   # (Commented out, ready for production use)
 ```
 
-### 📈 Container Management
+### Container Management
 
 #### Build & Deploy Commands
 ```bash
@@ -317,9 +317,9 @@ docker-compose -f docker-compose.yml up
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
 
-## 📊 Project Architecture
+## Project Architecture
 
-### 🏗️ Layered Architecture
+### Layered Architecture
 ```
 ┌─────────────────────────────────────┐
 │            Controller Layer         │  ← REST endpoints, validation
@@ -330,7 +330,7 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 └─────────────────────────────────────┘
 ```
 
-### 📁 Project Structure
+### Project Structure
 ```
 student-api/
 ├── 📁 src/
@@ -355,14 +355,14 @@ student-api/
 │           ├── 📁 integration/        # Integration tests
 │           │   └── StudentApiIntegrationTest.java
 │           └── StudentApiApplicationTests.java  # Context tests
-├── 🐳 Dockerfile                     # Container configuration
-├── 🐙 docker-compose.yml            # Orchestration setup
-├── ⚙️ mvnw21.cmd                    # Java 21 convenience script
-├── 📋 pom.xml                       # Maven configuration
-└── 📖 README.md                     # This file
+├── Dockerfile                     # Container configuration
+├── docker-compose.yml            # Orchestration setup
+├── mvnw21.cmd                    # Java 21 convenience script
+├── pom.xml                       # Maven configuration
+└── README.md                     # This file
 ```
 
-### 🔧 Key Components
+### Key Components
 
 | Component | Responsibility | Key Features |
 |-----------|---------------|--------------|
@@ -371,9 +371,9 @@ student-api/
 | **Student** | Data model | Validation annotations, JSON serialization |
 | **OpenApiConfig** | API documentation | Swagger configuration, metadata |
 
-## ⚙️ Configuration & Environment
+## Configuration & Environment
 
-### 🔧 Application Configuration
+### Application Configuration
 
 #### Core Settings (`application.properties`)
 ```properties
@@ -401,7 +401,7 @@ info.app.java.version=21
 - Enhanced logging and monitoring
 - Container-specific JVM settings
 
-### 🌍 Environment Variables
+### Environment Variables
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -414,7 +414,7 @@ info.app.java.version=21
 JAVA_OPTS="-XX:+UseZGC -XX:+EnableDynamicAgentLoading -Xmx512m -Xms256m"
 ```
 
-### 📋 Validation Configuration
+### Validation Configuration
 
 **Input Validation Rules:**
 - **Name**: `@NotBlank` - Cannot be empty or null
@@ -432,16 +432,16 @@ JAVA_OPTS="-XX:+UseZGC -XX:+EnableDynamicAgentLoading -Xmx512m -Xms256m"
 }
 ```
 
-## 🚀 Performance & Optimization
+## Performance & Optimization
 
-### ⚡ Java 21 LTS Benefits
+### Java 21 LTS Benefits
 - **ZGC (Z Garbage Collector)**: Ultra-low latency garbage collection
 - **Virtual Threads**: Improved concurrency (Project Loom)
 - **Pattern Matching**: Enhanced syntax and performance  
 - **Record Classes**: Efficient data carriers
 - **Sealed Classes**: Better type safety and performance
 
-### 🎯 JVM Optimizations
+### JVM Optimizations
 ```bash
 # Production JVM flags
 -XX:+UseZGC                    # Low-latency garbage collector
@@ -452,7 +452,7 @@ JAVA_OPTS="-XX:+UseZGC -XX:+EnableDynamicAgentLoading -Xmx512m -Xms256m"
 -XX:+OptimizeStringConcat      # String performance
 ```
 
-### 📊 Performance Metrics
+### Performance Metrics
 
 | Metric | Value | Notes |
 |--------|--------|-------|
@@ -461,7 +461,7 @@ JAVA_OPTS="-XX:+UseZGC -XX:+EnableDynamicAgentLoading -Xmx512m -Xms256m"
 | **Response Time** | <50ms | Simple CRUD operations |
 | **Throughput** | >1000 RPS | With adequate resources |
 
-### 🔍 Monitoring & Observability
+### Monitoring & Observability
 
 #### Built-in Monitoring Endpoints
 ```bash
@@ -487,9 +487,9 @@ docker inspect student-api-container | grep -A 10 '"Health"'
 docker logs student-api-container | grep health
 ```
 
-## � Development & Best Practices
+## Development & Best Practices
 
-### 🛠️ Development Setup
+### Development Setup
 
 #### IDE Configuration
 - **IntelliJ IDEA**: Enable Java 21 preview features
@@ -508,7 +508,7 @@ docker logs student-api-container | grep health
 ./mvnw dependency-check:check
 ```
 
-### 📋 Code Standards
+### Code Standards
 
 #### Package Structure Convention
 ```
@@ -526,7 +526,7 @@ com.example.student_api/
 - **Constants**: UPPER_SNAKE_CASE (`MAX_STUDENTS`)
 - **Packages**: lowercase (`com.example.student_api`)
 
-### 🔧 Development Commands
+### Development Commands
 
 #### Quick Development Workflow
 ```bash
@@ -555,7 +555,7 @@ com.example.student_api/
 ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-XX:+PrintGCDetails -XX:+PrintGCTimeStamps"
 ```
 
-## 🔍 Troubleshooting Guide
+## Troubleshooting Guide
 
 ### Common Issues & Solutions
 
@@ -596,15 +596,15 @@ docker system prune -f
 docker build --no-cache -t student-api .
 ```
 
-### 📞 Getting Help
-- 📖 **Documentation**: Check Swagger UI at `/swagger-ui.html`
-- 🔍 **Logs**: Enable debug logging for detailed information
-- 💬 **Issues**: Create GitHub issues for bugs or feature requests
-- 📧 **Contact**: Reach out to repository maintainers
+### Getting Help
+- **Documentation**: Check Swagger UI at `/swagger-ui.html`
+- **Logs**: Enable debug logging for detailed information
+- **Issues**: Create GitHub issues for bugs or feature requests
+- **Contact**: Reach out to repository maintainers
 
-## � Roadmap & Future Enhancements
+## Roadmap & Future Enhancements
 
-### 🎯 Planned Features
+### Planned Features
 
 #### Phase 1: Data Persistence
 - [ ] **Database Integration**
@@ -657,17 +657,17 @@ docker build --no-cache -t student-api .
   - Event-driven architecture
   - Async processing
 
-### 📈 Performance Targets
+### Performance Targets
 - **Response Time**: <10ms for simple operations
 - **Throughput**: >10,000 RPS with clustering
 - **Availability**: 99.9% uptime
 - **Database**: Support for 1M+ student records
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Here's how to get started:
 
-### 🔧 Development Setup
+### Development Setup
 1. **Fork** the repository
 2. **Clone** your fork locally
 3. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
@@ -677,13 +677,13 @@ We welcome contributions! Here's how to get started:
 7. **Push** to your branch (`git push origin feature/amazing-feature`)
 8. **Open** a Pull Request
 
-### 📋 Contribution Guidelines
+### Contribution Guidelines
 
 #### Code Quality Standards
-- ✅ **Test Coverage**: Maintain >90% test coverage
-- ✅ **Code Style**: Follow existing formatting conventions
-- ✅ **Documentation**: Update README and code comments
-- ✅ **Performance**: No regression in existing benchmarks
+- **Test Coverage**: Maintain >90% test coverage
+- **Code Style**: Follow existing formatting conventions
+- **Documentation**: Update README and code comments
+- **Performance**: No regression in existing benchmarks
 
 #### Pull Request Requirements
 - [ ] All tests pass (`./mvnw test`)
@@ -700,44 +700,42 @@ When reporting bugs, please include:
 - Error logs/stack traces
 - Minimal test case (if possible)
 
-## 📄 License & Legal
+## License & Legal
 
-### 📜 License
+### License
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-### � Acknowledgments
+### Acknowledgments
 - **Spring Boot Team** for the amazing framework
 - **Eclipse Adoptium** for Java 21 LTS distribution
 - **OpenAPI Initiative** for API documentation standards
 - **Docker Inc.** for containerization platform
 
-### 📊 Project Statistics
+### Project Statistics
 - **Lines of Code**: ~1,500+
 - **Test Coverage**: 100%
 - **Dependencies**: 8 direct dependencies
 - **Build Time**: ~30 seconds
 - **Docker Image Size**: ~200MB
 
-## 📞 Support & Contact
+## Support & Contact
 
-### 🆘 Getting Help
-- 📖 **Documentation**: Comprehensive README (you're reading it!)
-- 💬 **GitHub Issues**: Report bugs or request features
-- 📧 **Email**: Contact repository maintainer
-- 🌐 **Community**: Join discussions in GitHub Discussions
+### Getting Help
+- **Documentation**: Comprehensive README (you're reading it!)
+- **GitHub Issues**: Report bugs or request features
+- **Email**: Contact repository maintainer
+- **Community**: Join discussions in GitHub Discussions
 
-### 👥 Maintainers
+### Maintainers
 - **Primary**: [rojabugade](https://github.com/rojabugade)
 - **Contributors**: See [contributors page](https://github.com/rojabugade/Java-Reboot/graphs/contributors)
 
-### 🌟 Show Your Support
-Give a ⭐️ if this project helped you!
 
 ---
 
 <div align="center">
 
-**Built with ❤️ using Spring Boot 3.5.6 and Java 21 LTS**
+**Built using Spring Boot 3.5.6 and Java 21 LTS**
 
 ![Java](https://img.shields.io/badge/Java-21%20LTS-orange?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.6-brightgreen?style=for-the-badge&logo=spring&logoColor=white)
